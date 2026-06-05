@@ -1,0 +1,196 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Social Share\n"
+"POT-Creation-Date: 2026-06-05 15:44-0600\n"
+"PO-Revision-Date: 2026-06-05 15:46-0600\n"
+"Last-Translator: \n"
+"Language-Team: Joshua Parker\n"
+"Language: zh\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Domain: social-share\n"
+"X-Generator: Poedit 3.9\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-KeywordsList: "
+"t__;esc_html__;trans;trans_html;trans_attr;esc_attr__\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: Controller\n"
+"X-Poedit-SearchPath-1: Shortcode\n"
+"X-Poedit-SearchPath-2: Support\n"
+"X-Poedit-SearchPath-3: view\n"
+"X-Poedit-SearchPath-4: SocialSharePlugin.php\n"
+
+#: SocialSharePlugin.php:55
+msgid "Social Share"
+msgstr "社交分享"
+
+#: view/settings.phtml:32
+msgid "Social Share Settings"
+msgstr "社交分享设置"
+
+#: view/settings.phtml:36
+msgid "Save"
+msgstr "保存"
+
+#: view/settings.phtml:51
+msgid "General Settings"
+msgstr "常规设置"
+
+#: view/settings.phtml:56
+msgid "Enable Social Sharing"
+msgstr "启用分享"
+
+#: view/settings.phtml:66
+msgid "Placement"
+msgstr "放置"
+
+#: view/settings.phtml:69
+msgid "Before Content"
+msgstr "内容之前"
+
+#: view/settings.phtml:70
+msgid "After Content"
+msgstr "内容之后"
+
+#: view/settings.phtml:71
+msgid "Before and After Content"
+msgstr "之前和之后的内容"
+
+#: view/settings.phtml:72
+msgid "Shortcode Only"
+msgstr "仅限短代码"
+
+#: view/settings.phtml:73
+#, fuzzy
+msgid "Template Tag Only"
+msgstr "仅模板标签"
+
+#: view/settings.phtml:74
+#, fuzzy
+msgid "Floating Only"
+msgstr "仅浮动"
+
+#: view/settings.phtml:84
+#, fuzzy
+msgid "Show Share Buttons On"
+msgstr "显示分享按钮开启"
+
+#: view/settings.phtml:87
+#, fuzzy
+msgid "Products Only"
+msgstr "仅限产品"
+
+#: view/settings.phtml:88
+msgid "All Content Types"
+msgstr "所有内容类型"
+
+#: view/settings.phtml:89 view/settings.phtml:100
+#, fuzzy
+msgid "Selected Content Types"
+msgstr "精选内容类型"
+
+#: view/settings.phtml:90
+#, fuzzy
+msgid "All Content Types and Products"
+msgstr "所有内容类型和产品"
+
+#: view/settings.phtml:117
+#, fuzzy
+msgid "Used only when Selected Content Types is selected."
+msgstr "仅在选择“选择内容类型”时使用。"
+
+#: view/settings.phtml:125
+msgid "Social Networks"
+msgstr "社交网络"
+
+#: view/settings.phtml:153
+#, fuzzy
+msgid "On Deactivation"
+msgstr "退役后"
+
+#: view/settings.phtml:158
+msgid "Remove Settings"
+msgstr "删除设置"
+
+#: view/settings.phtml:171
+#, fuzzy
+msgid "Floating Share Bar"
+msgstr "浮动股份栏"
+
+#: view/settings.phtml:176
+msgid "Enable Floating Bar"
+msgstr "启用侧边浮窗"
+
+#: view/settings.phtml:186
+msgid "Show On Mobile"
+msgstr "在手机上显示"
+
+#: view/settings.phtml:196
+msgid "Floating Position"
+msgstr "浮动位置"
+
+#: view/settings.phtml:199
+msgid "Vertical Left"
+msgstr "垂直向左"
+
+#: view/settings.phtml:200
+msgid "Vertical Right"
+msgstr "垂直靠右"
+
+#: view/settings.phtml:201
+msgid "Horizontal Bottom"
+msgstr "水平底部"
+
+#: view/settings.phtml:202
+msgid "Horizontal Top"
+msgstr "水平顶部"
+
+#: view/settings.phtml:215
+msgid "Appearance"
+msgstr "外观"
+
+#: view/settings.phtml:220
+msgid "Icon Shape"
+msgstr "图标形状"
+
+#: view/settings.phtml:223
+msgid "Square"
+msgstr "方形"
+
+#: view/settings.phtml:224
+msgid "Round"
+msgstr "圆形"
+
+#: view/settings.phtml:225
+msgid "Rectangular"
+msgstr "矩形"
+
+#: view/settings.phtml:235
+msgid "Icon Size"
+msgstr "图标大小"
+
+#: view/settings.phtml:247
+msgid "Share Counts"
+msgstr "分享计数"
+
+#: view/settings.phtml:252
+#, fuzzy
+msgid "Show Individual Counts"
+msgstr "展览个人计数"
+
+#: view/settings.phtml:262
+msgid "Show Total Count"
+msgstr "显示总计数"
+
+#: view/settings.phtml:272
+#, fuzzy
+msgid "Cache Counts"
+msgstr "缓存计数"
+
+#: view/settings.phtml:282
+#, fuzzy
+msgid "Cache TTL Seconds"
+msgstr "缓存TTL秒"

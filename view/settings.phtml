@@ -1,0 +1,320 @@
+<?php
+
+use App\Application\Devflow;
+use App\Shared\Services\Registry;
+use Qubus\EventDispatcher\ActionFilter\Action;
+
+use function App\Shared\Helpers\admin_url;
+use function App\Shared\Helpers\checked;
+use function App\Shared\Helpers\selected;
+use function Qubus\Security\Helpers\esc_attr;
+use function Qubus\Security\Helpers\esc_html;
+use function Qubus\Security\Helpers\esc_html__;
+
+$this->parent('framework::backend/layouts/admin-layout');
+
+$this->block('backend', function ($params) {
+Registry::getInstance()->{'set'}('screen_parent', 'social-share');
+Registry::getInstance()->{'set'}('screen_child', 'social-share');
+$r = Registry::getInstance()->get('social-share');
+
+$settings = $params['settings'];
+$networks = $params['networks'];
+$contentTypes = $params['contentTypes'] ?? [];
+?>
+
+    <form name="form" method="post" data-toggle="validator" action="<?= admin_url('plugin/social-share/'); ?>" id="form" autocomplete="off">
+
+        <div class="content-wrapper">
+            <div class="box box-solid">
+                <div class="box-header with-border">
+                    <i class="fa fa-share-alt"></i>
+                    <h3 class="box-title"><?= esc_html__('Social Share Settings', $r['id']); ?></h3>
+
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-success">
+                            <i class="fa fa-save"></i> <?= esc_html__('Save', $r['id']); ?>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <section class="content">
+                <?php Action::getInstance()->doAction('admin_notices'); ?>
+                <?= Devflow::$PHP->flash->display(); ?>
+
+                <div class="row">
+                    <div class="col-md-9">
+
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <h3 class="box-title"><?= esc_html__('General Settings', $r['id']); ?></h3>
+                            </div>
+
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label><strong><?= esc_html__('Enable Social Sharing', $r['id']); ?></strong></label>
+                                    <div class="ios-switch switch-md pull-right">
+                                        <input type="checkbox"
+                                               class="js-switch"
+                                               name="social_share[enabled]"
+                                               value="1"<?= checked('1', !empty($settings['enabled']) ? '1' : '0', false); ?> />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label><strong><?= esc_html__('Placement', $r['id']); ?></strong></label>
+                                    <select name="social_share[placement]" class="form-control select2" style="width: 100%;">
+                                        <?php foreach ([
+                                               'before' => esc_html__('Before Content', $r['id']),
+                                               'after' => esc_html__('After Content', $r['id']),
+                                               'before_after' => esc_html__('Before and After Content', $r['id']),
+                                               'shortcode' => esc_html__('Shortcode Only', $r['id']),
+                                               'template_tag' => esc_html__('Template Tag Only', $r['id']),
+                                               'floating' => esc_html__('Floating Only', $r['id']),
+                                           ] as $value => $label) : ?>
+                                            <option value="<?= esc_attr($value); ?>"<?= selected($value, $settings['placement'], false); ?>>
+                                                <?= esc_html($label); ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label><strong><?= esc_html__('Show Share Buttons On', $r['id']); ?></strong></label>
+                                    <select name="social_share[display_scope]" class="form-control select2" id="social-share-display-scope" style="width: 100%;">
+                                        <?php foreach ([
+                                               'products' => esc_html__('Products Only', $r['id']),
+                                               'all_content' => esc_html__('All Content Types', $r['id']),
+                                               'selected_content_types' => esc_html__('Selected Content Types', $r['id']),
+                                               'all_content_and_products' => esc_html__('All Content Types and Products', $r['id']),
+                                           ] as $value => $label) : ?>
+                                            <option value="<?= esc_attr($value); ?>"<?= selected($value, $settings['display_scope'], false); ?>>
+                                                <?= esc_html($label); ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+
+                                <div class="form-group" id="selected-content-types-field">
+                                    <label><strong><?= esc_html__('Selected Content Types', $r['id']); ?></strong></label>
+
+                                    <?php foreach ($contentTypes as $contentType) :
+                                        $slug = is_array($contentType) ? $contentType['slug'] : $contentType->slug;
+                                        $title = is_array($contentType) ? $contentType['title'] : $contentType->title;
+                                        ?>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox"
+                                                       name="social_share[content_types][]"
+                                                       value="<?= esc_attr($slug); ?>"<?= checked('1', in_array($slug, $settings['content_types'] ?? [], true) ? '1' : '0', false); ?>>
+                                                <?= esc_html($title); ?>
+                                            </label>
+                                        </div>
+                                    <?php endforeach; ?>
+
+                                    <p class="help-block">
+                                        <?= esc_html__('Used only when Selected Content Types is selected.', $r['id']); ?>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <h3 class="box-title"><?= esc_html__('Social Networks', $r['id']); ?></h3>
+                            </div>
+
+                            <div class="box-body">
+                                <div class="row">
+                                    <?php foreach ($networks as $key => $network) : ?>
+                                        <div class="col-md-4 col-sm-6">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox"
+                                                           name="social_share[networks][]"
+                                                           value="<?= esc_attr($key); ?>"<?= checked('1', in_array($key, $settings['networks'] ?? [], true) ? '1' : '0', false); ?>>
+                                                    <i class="<?= esc_attr($network['icon']); ?>" aria-hidden="true"></i>
+                                                    <?= esc_html($network['label']); ?>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-3">
+
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <h3 class="box-title"><?= esc_html__('On Deactivation', $r['id']); ?></h3>
+                            </div>
+
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label><strong><?= esc_html__('Remove Settings', $r['id']); ?></strong></label>
+                                    <div class="ios-switch switch-md pull-right">
+                                        <input type="checkbox"
+                                               class="js-switch"
+                                               name="social_share[remove_settings]"
+                                               value="1"<?= checked('1', !empty($settings['remove_settings']) ? '1' : '0', false); ?> />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <h3 class="box-title"><?= esc_html__('Floating Share Bar', $r['id']); ?></h3>
+                            </div>
+
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label><strong><?= esc_html__('Enable Floating Bar', $r['id']); ?></strong></label>
+                                    <div class="ios-switch switch-md pull-right">
+                                        <input type="checkbox"
+                                               class="js-switch"
+                                               name="social_share[floating_enabled]"
+                                               value="1"<?= checked('1', !empty($settings['floating_enabled']) ? '1' : '0', false); ?> />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label><strong><?= esc_html__('Show On Mobile', $r['id']); ?></strong></label>
+                                    <div class="ios-switch switch-md pull-right">
+                                        <input type="checkbox"
+                                               class="js-switch"
+                                               name="social_share[floating_mobile]"
+                                               value="1"<?= checked('1', !empty($settings['floating_mobile']) ? '1' : '0', false); ?> />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label><strong><?= esc_html__('Floating Position', $r['id']); ?></strong></label>
+                                    <select name="social_share[floating_position]" class="form-control select2" style="width: 100%;">
+                                        <?php foreach ([
+                                                       'vertical_left' => esc_html__('Vertical Left', $r['id']),
+                                                       'vertical_right' => esc_html__('Vertical Right', $r['id']),
+                                                       'horizontal_bottom' => esc_html__('Horizontal Bottom', $r['id']),
+                                                       'horizontal_top' => esc_html__('Horizontal Top', $r['id']),
+                                               ] as $value => $label) : ?>
+                                            <option value="<?= esc_attr($value); ?>"<?= selected($value, $settings['floating_position'], false); ?>>
+                                                <?= esc_html($label); ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <h3 class="box-title"><?= esc_html__('Appearance', $r['id']); ?></h3>
+                            </div>
+
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label><strong><?= esc_html__('Icon Shape', $r['id']); ?></strong></label>
+                                    <select name="social_share[icon_shape]" class="form-control select2" style="width: 100%;">
+                                        <?php foreach ([
+                                                   'square' => esc_html__('Square', $r['id']),
+                                                   'round' => esc_html__('Round', $r['id']),
+                                                   'rectangular' => esc_html__('Rectangular', $r['id']),
+                                           ] as $value => $label) : ?>
+                                            <option value="<?= esc_attr($value); ?>"<?= selected($value, $settings['icon_shape'], false); ?>>
+                                                <?= esc_html($label); ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label><strong><?= esc_html__('Icon Size', $r['id']); ?></strong></label>
+                                    <input type="number"
+                                           min="16"
+                                           name="social_share[icon_size]"
+                                           class="form-control"
+                                           value="<?= esc_attr((string) $settings['icon_size']); ?>">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <h3 class="box-title"><?= esc_html__('Share Counts', $r['id']); ?></h3>
+                            </div>
+
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label><strong><?= esc_html__('Show Individual Counts', $r['id']); ?></strong></label>
+                                    <div class="ios-switch switch-md pull-right">
+                                        <input type="checkbox"
+                                               class="js-switch"
+                                               name="social_share[show_counts]"
+                                               value="1"<?= checked('1', !empty($settings['show_counts']) ? '1' : '0', false); ?> />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label><strong><?= esc_html__('Show Total Count', $r['id']); ?></strong></label>
+                                    <div class="ios-switch switch-md pull-right">
+                                        <input type="checkbox"
+                                               class="js-switch"
+                                               name="social_share[show_total]"
+                                               value="1"<?= checked('1', !empty($settings['show_total']) ? '1' : '0', false); ?> />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label><strong><?= esc_html__('Cache Counts', $r['id']); ?></strong></label>
+                                    <div class="ios-switch switch-md pull-right">
+                                        <input type="checkbox"
+                                               class="js-switch"
+                                               name="social_share[cache_counts]"
+                                               value="1"<?= checked('1', !empty($settings['cache_counts']) ? '1' : '0', false); ?> />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label><strong><?= esc_html__('Cache TTL Seconds', $r['id']); ?></strong></label>
+                                    <input type="number"
+                                           min="300"
+                                           name="social_share[cache_ttl]"
+                                           class="form-control"
+                                           value="<?= esc_attr((string) $settings['cache_ttl']); ?>">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+        </div>
+    </form>
+
+    <script>
+        jQuery(function ($) {
+            function toggleSelectedContentTypes() {
+                var value = $('#social-share-display-scope').val();
+
+                if (value === 'selected_content_types') {
+                    $('#selected-content-types-field').show();
+                } else {
+                    $('#selected-content-types-field').hide();
+                }
+            }
+
+            $(document).on(
+                'change select2:select',
+                '#social-share-display-scope',
+                toggleSelectedContentTypes
+            );
+
+            toggleSelectedContentTypes();
+        });
+    </script>
+
+<?php }); ?>

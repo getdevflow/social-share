@@ -1,0 +1,29 @@
+{
+  "name": "getdevflow/social-share",
+  "description": "Simple plugin to allow visitors to share your website content.",
+  "type": "devflow-plugin",
+  "keywords": ["metadata","bookmark","social-networks","opengraph","facebook","twitter"],
+  "license": "GPL-2.0-only",
+  "authors": [
+    {
+      "name": "Joshua Parker",
+      "email": "joshua@joshuaparker.dev"
+    }
+  ],
+  "require": {
+    "php": ">=8.4",
+    "oomphinc/composer-installers-extender": "^2.0"
+  },
+  "extra": {
+    "installer-name": "SocialShare",
+    "installer-types": ["devflow-plugin"]
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "config": {
+    "allow-plugins": {
+      "composer/installers": true,
+      "oomphinc/composer-installers-extender": true
+    }
+  }
+}
