@@ -2,8 +2,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Social Share\n"
-"POT-Creation-Date: 2026-06-05 15:44-0600\n"
-"PO-Revision-Date: 2026-06-05 15:51-0600\n"
+"POT-Creation-Date: 2026-10-07 10:59-0700\n"
+"PO-Revision-Date: 2026-10-07 10:59-0700\n"
 "Last-Translator: \n"
 "Language-Team: Joshua Parker\n"
 "Language: en_US\n"
@@ -23,162 +23,202 @@ msgstr ""
 "X-Poedit-SearchPath-3: view\n"
 "X-Poedit-SearchPath-4: SocialSharePlugin.php\n"
 
-#: SocialSharePlugin.php:55
+#: Controller/SocialShareController.php:49
+#: Controller/SocialShareController.php:94
+msgid "Access denied."
+msgstr ""
+
+#: Controller/SocialShareController.php:100
+msgid "Share counts reset successfully."
+msgstr ""
+
+#: SocialSharePlugin.php:58
 msgid "Social Share"
 msgstr ""
 
-#: view/settings.phtml:32
+#: view/settings.phtml:34
 msgid "Social Share Settings"
 msgstr ""
 
-#: view/settings.phtml:36
+#: view/settings.phtml:38
 msgid "Save"
 msgstr ""
 
-#: view/settings.phtml:51
+#: view/settings.phtml:53
 msgid "General Settings"
 msgstr ""
 
-#: view/settings.phtml:56
+#: view/settings.phtml:58
 msgid "Enable Social Sharing"
 msgstr ""
 
-#: view/settings.phtml:66
+#: view/settings.phtml:68
 msgid "Placement"
 msgstr ""
 
-#: view/settings.phtml:69
+#: view/settings.phtml:71
 msgid "Before Content"
 msgstr ""
 
-#: view/settings.phtml:70
+#: view/settings.phtml:72
 msgid "After Content"
 msgstr ""
 
-#: view/settings.phtml:71
+#: view/settings.phtml:73
 msgid "Before and After Content"
 msgstr ""
 
-#: view/settings.phtml:72
+#: view/settings.phtml:74
 msgid "Shortcode Only"
 msgstr ""
 
-#: view/settings.phtml:73
+#: view/settings.phtml:75
 msgid "Template Tag Only"
 msgstr ""
 
-#: view/settings.phtml:74
+#: view/settings.phtml:76
 msgid "Floating Only"
 msgstr ""
 
-#: view/settings.phtml:84
+#: view/settings.phtml:86
 msgid "Show Share Buttons On"
 msgstr ""
 
-#: view/settings.phtml:87
+#: view/settings.phtml:89
 msgid "Products Only"
 msgstr ""
 
-#: view/settings.phtml:88
+#: view/settings.phtml:90
 msgid "All Content Types"
 msgstr ""
 
-#: view/settings.phtml:89 view/settings.phtml:100
+#: view/settings.phtml:91 view/settings.phtml:102
 msgid "Selected Content Types"
 msgstr ""
 
-#: view/settings.phtml:90
+#: view/settings.phtml:92
 msgid "All Content Types and Products"
 msgstr ""
 
-#: view/settings.phtml:117
+#: view/settings.phtml:119
 msgid "Used only when Selected Content Types is selected."
 msgstr ""
 
-#: view/settings.phtml:125
+#: view/settings.phtml:127
 msgid "Social Networks"
 msgstr ""
 
-#: view/settings.phtml:153
+#: view/settings.phtml:155
 msgid "On Deactivation"
 msgstr ""
 
-#: view/settings.phtml:158
+#: view/settings.phtml:160
 msgid "Remove Settings"
 msgstr ""
 
-#: view/settings.phtml:171
-msgid "Floating Share Bar"
+#: view/settings.phtml:170
+msgid "Remove Share Data"
 msgstr ""
 
-#: view/settings.phtml:176
-msgid "Enable Floating Bar"
+#: view/settings.phtml:178
+msgid ""
+"Permanently deletes recorded share intents when the plugin is deactivated."
 msgstr ""
 
 #: view/settings.phtml:186
-msgid "Show On Mobile"
+msgid "Floating Share Bar"
 msgstr ""
 
-#: view/settings.phtml:196
-msgid "Floating Position"
-msgstr ""
-
-#: view/settings.phtml:199
-msgid "Vertical Left"
-msgstr ""
-
-#: view/settings.phtml:200
-msgid "Vertical Right"
+#: view/settings.phtml:191
+msgid "Enable Floating Bar"
 msgstr ""
 
 #: view/settings.phtml:201
-msgid "Horizontal Bottom"
+msgid "Show On Mobile"
 msgstr ""
 
-#: view/settings.phtml:202
-msgid "Horizontal Top"
+#: view/settings.phtml:211
+msgid "Floating Position"
+msgstr ""
+
+#: view/settings.phtml:214
+msgid "Vertical Left"
 msgstr ""
 
 #: view/settings.phtml:215
+msgid "Vertical Right"
+msgstr ""
+
+#: view/settings.phtml:216
+msgid "Horizontal Bottom"
+msgstr ""
+
+#: view/settings.phtml:217
+msgid "Horizontal Top"
+msgstr ""
+
+#: view/settings.phtml:230
 msgid "Appearance"
 msgstr ""
 
-#: view/settings.phtml:220
+#: view/settings.phtml:235
 msgid "Icon Shape"
 msgstr ""
 
-#: view/settings.phtml:223
+#: view/settings.phtml:238
 msgid "Square"
 msgstr ""
 
-#: view/settings.phtml:224
+#: view/settings.phtml:239
 msgid "Round"
 msgstr ""
 
-#: view/settings.phtml:225
+#: view/settings.phtml:240
 msgid "Rectangular"
 msgstr ""
 
-#: view/settings.phtml:235
+#: view/settings.phtml:250
 msgid "Icon Size"
 msgstr ""
 
-#: view/settings.phtml:247
+#: view/settings.phtml:263
 msgid "Share Counts"
 msgstr ""
 
-#: view/settings.phtml:252
+#: view/settings.phtml:268
+msgid "Recorded Share Intents"
+msgstr ""
+
+#: view/settings.phtml:271
+msgid ""
+"Counts represent share-button activations. External networks do not confirm "
+"completed shares."
+msgstr ""
+
+#: view/settings.phtml:276
+msgid "Record Share Intents"
+msgstr ""
+
+#: view/settings.phtml:286
 msgid "Show Individual Counts"
 msgstr ""
 
-#: view/settings.phtml:262
+#: view/settings.phtml:296
 msgid "Show Total Count"
 msgstr ""
 
-#: view/settings.phtml:272
+#: view/settings.phtml:306
 msgid "Cache Counts"
 msgstr ""
 
-#: view/settings.phtml:282
+#: view/settings.phtml:316
 msgid "Cache TTL Seconds"
+msgstr ""
+
+#: view/settings.phtml:329
+msgid "Reset all recorded share counts? This cannot be undone."
+msgstr ""
+
+#: view/settings.phtml:331
+msgid "Reset Share Counts"
 msgstr ""

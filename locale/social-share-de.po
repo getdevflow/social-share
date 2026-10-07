@@ -2,8 +2,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Social Share\n"
-"POT-Creation-Date: 2026-06-05 15:44-0600\n"
-"PO-Revision-Date: 2026-06-05 15:47-0600\n"
+"POT-Creation-Date: 2026-10-07 10:59-0700\n"
+"PO-Revision-Date: 2026-10-07 10:59-0700\n"
 "Last-Translator: \n"
 "Language-Team: Joshua Parker\n"
 "Language: de\n"
@@ -23,185 +23,238 @@ msgstr ""
 "X-Poedit-SearchPath-3: view\n"
 "X-Poedit-SearchPath-4: SocialSharePlugin.php\n"
 
-#: SocialSharePlugin.php:55
+#: Controller/SocialShareController.php:49
+#: Controller/SocialShareController.php:94
+msgid "Access denied."
+msgstr "Zugriff verweigert."
+
+#: Controller/SocialShareController.php:100
+#, fuzzy
+msgid "Share counts reset successfully."
+msgstr "Die Share-Zahlen werden erfolgreich zurückgesetzt."
+
+#: SocialSharePlugin.php:58
 msgid "Social Share"
 msgstr "Soziales Teilen"
 
-#: view/settings.phtml:32
+#: view/settings.phtml:34
 msgid "Social Share Settings"
 msgstr "Social Share-Einstellungen"
 
-#: view/settings.phtml:36
+#: view/settings.phtml:38
 #, fuzzy
 msgid "Save"
 msgstr "Speichern"
 
-#: view/settings.phtml:51
+#: view/settings.phtml:53
 msgid "General Settings"
 msgstr "Allgemeine Einstellungen"
 
-#: view/settings.phtml:56
+#: view/settings.phtml:58
 msgid "Enable Social Sharing"
 msgstr "Social Teilen aktivieren"
 
-#: view/settings.phtml:66
+#: view/settings.phtml:68
 msgid "Placement"
 msgstr "Platzierung"
 
-#: view/settings.phtml:69
+#: view/settings.phtml:71
 msgid "Before Content"
 msgstr "Vor dem Inhalt"
 
-#: view/settings.phtml:70
+#: view/settings.phtml:72
 msgid "After Content"
 msgstr "Nach dem Inhalt"
 
-#: view/settings.phtml:71
+#: view/settings.phtml:73
 #, fuzzy
 msgid "Before and After Content"
 msgstr "Vorher-Nachher-Inhalte"
 
-#: view/settings.phtml:72
+#: view/settings.phtml:74
 #, fuzzy
 msgid "Shortcode Only"
 msgstr "Nur Shortcode"
 
-#: view/settings.phtml:73
+#: view/settings.phtml:75
 #, fuzzy
 msgid "Template Tag Only"
 msgstr "Nur Vorlagen-Tag"
 
-#: view/settings.phtml:74
+#: view/settings.phtml:76
 #, fuzzy
 msgid "Floating Only"
 msgstr "Nur schwebend"
 
-#: view/settings.phtml:84
+#: view/settings.phtml:86
 #, fuzzy
 msgid "Show Share Buttons On"
 msgstr "Teilen-Buttons anzeigen"
 
-#: view/settings.phtml:87
+#: view/settings.phtml:89
 #, fuzzy
 msgid "Products Only"
 msgstr "Nur Produkte"
 
-#: view/settings.phtml:88
+#: view/settings.phtml:90
 msgid "All Content Types"
 msgstr "Alle Inhalts-Arten"
 
-#: view/settings.phtml:89 view/settings.phtml:100
+#: view/settings.phtml:91 view/settings.phtml:102
 #, fuzzy
 msgid "Selected Content Types"
 msgstr "Ausgewählte Inhaltstypen"
 
-#: view/settings.phtml:90
+#: view/settings.phtml:92
 #, fuzzy
 msgid "All Content Types and Products"
 msgstr "Alle Inhaltstypen und -produkte"
 
-#: view/settings.phtml:117
+#: view/settings.phtml:119
 #, fuzzy
 msgid "Used only when Selected Content Types is selected."
-msgstr ""
-"Wird nur verwendet, wenn ausgewählte Inhaltstypen "
-"ausgewählt ist."
+msgstr "Wird nur verwendet, wenn ausgewählte Inhaltstypen ausgewählt ist."
 
-#: view/settings.phtml:125
+#: view/settings.phtml:127
 msgid "Social Networks"
 msgstr "Soziale Netzwerke"
 
-#: view/settings.phtml:153
+#: view/settings.phtml:155
 #, fuzzy
 msgid "On Deactivation"
 msgstr "Bei der Außerdienststellung"
 
-#: view/settings.phtml:158
+#: view/settings.phtml:160
 #, fuzzy
 msgid "Remove Settings"
 msgstr "Einstellungen entfernen"
 
-#: view/settings.phtml:171
+#: view/settings.phtml:170
+#, fuzzy
+msgid "Remove Share Data"
+msgstr "Freigabedaten entfernen"
+
+#: view/settings.phtml:178
+#, fuzzy
+msgid ""
+"Permanently deletes recorded share intents when the plugin is deactivated."
+msgstr ""
+"Löscht dauerhaft aufgezeichnete Share-Absichten, wenn das Plugin "
+"deaktiviert wird."
+
+#: view/settings.phtml:186
 #, fuzzy
 msgid "Floating Share Bar"
 msgstr "Schwimmender Share-Bar"
 
-#: view/settings.phtml:176
+#: view/settings.phtml:191
 #, fuzzy
 msgid "Enable Floating Bar"
 msgstr "Floating Bar aktivieren"
 
-#: view/settings.phtml:186
+#: view/settings.phtml:201
 #, fuzzy
 msgid "Show On Mobile"
 msgstr "Show auf dem Handy"
 
-#: view/settings.phtml:196
+#: view/settings.phtml:211
 #, fuzzy
 msgid "Floating Position"
 msgstr "Schwimmende Position"
 
-#: view/settings.phtml:199
+#: view/settings.phtml:214
 msgid "Vertical Left"
 msgstr "Vertikal links"
 
-#: view/settings.phtml:200
+#: view/settings.phtml:215
 msgid "Vertical Right"
 msgstr "Vertikal rechts"
 
-#: view/settings.phtml:201
+#: view/settings.phtml:216
 msgid "Horizontal Bottom"
 msgstr "Horizontaler Boden"
 
-#: view/settings.phtml:202
+#: view/settings.phtml:217
 #, fuzzy
 msgid "Horizontal Top"
 msgstr "Horizontale Spitze"
 
-#: view/settings.phtml:215
+#: view/settings.phtml:230
 msgid "Appearance"
 msgstr "Aussehen"
 
-#: view/settings.phtml:220
+#: view/settings.phtml:235
 msgid "Icon Shape"
 msgstr "Icon Form"
 
-#: view/settings.phtml:223
+#: view/settings.phtml:238
 msgid "Square"
 msgstr "Quadrat"
 
-#: view/settings.phtml:224
+#: view/settings.phtml:239
 msgid "Round"
 msgstr "Rund"
 
-#: view/settings.phtml:225
+#: view/settings.phtml:240
 msgid "Rectangular"
 msgstr "Rechteckig"
 
-#: view/settings.phtml:235
+#: view/settings.phtml:250
 msgid "Icon Size"
 msgstr "Icon Größe"
 
-#: view/settings.phtml:247
+#: view/settings.phtml:263
 msgid "Share Counts"
 msgstr "Share-Zählungen"
 
-#: view/settings.phtml:252
+#: view/settings.phtml:268
+#, fuzzy
+msgid "Recorded Share Intents"
+msgstr "Aufgezeichnete Anteilungsabsichten"
+
+#: view/settings.phtml:271
+#, fuzzy
+msgid ""
+"Counts represent share-button activations. External networks do not confirm "
+"completed shares."
+msgstr ""
+"Die Zählungen stellen die Aktivierungen der Share-Button dar. Externe "
+"Netzwerke bestätigen abgeschlossene Shares nicht."
+
+#: view/settings.phtml:276
+#, fuzzy
+msgid "Record Share Intents"
+msgstr "Absichten zur Rekordteilung"
+
+#: view/settings.phtml:286
 #, fuzzy
 msgid "Show Individual Counts"
 msgstr "Einzelzählungen der Show"
 
-#: view/settings.phtml:262
+#: view/settings.phtml:296
 #, fuzzy
 msgid "Show Total Count"
 msgstr "Gesamtanzahl der Sendungen"
 
-#: view/settings.phtml:272
+#: view/settings.phtml:306
 #, fuzzy
 msgid "Cache Counts"
 msgstr "Cache-Zählungen"
 
-#: view/settings.phtml:282
+#: view/settings.phtml:316
 #, fuzzy
 msgid "Cache TTL Seconds"
 msgstr "Cache TTL-Sekunden"
+
+#: view/settings.phtml:329
+#, fuzzy
+msgid "Reset all recorded share counts? This cannot be undone."
+msgstr ""
+"Alle aufgezeichneten Share-Zählungen zurücksetzen? Das kann nicht "
+"rückgängig gemacht werden."
+
+#: view/settings.phtml:331
+#, fuzzy
+#| msgid "Share Counts"
+msgid "Reset Share Counts"
+msgstr "Zurücksetzen der Share-Zählen"

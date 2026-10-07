@@ -6,6 +6,9 @@ namespace Plugin\SocialShare\Support;
 
 final class SocialNetwork
 {
+    /**
+     * @return array<string, array{label:string,icon:string,color:string,url:string}>
+     */
     public static function all(): array
     {
         return [

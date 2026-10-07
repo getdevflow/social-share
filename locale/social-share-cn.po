@@ -2,8 +2,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Social Share\n"
-"POT-Creation-Date: 2026-06-05 15:44-0600\n"
-"PO-Revision-Date: 2026-06-05 15:46-0600\n"
+"POT-Creation-Date: 2026-10-07 10:59-0700\n"
+"PO-Revision-Date: 2026-10-07 10:59-0700\n"
 "Last-Translator: \n"
 "Language-Team: Joshua Parker\n"
 "Language: zh\n"
@@ -23,174 +23,224 @@ msgstr ""
 "X-Poedit-SearchPath-3: view\n"
 "X-Poedit-SearchPath-4: SocialSharePlugin.php\n"
 
-#: SocialSharePlugin.php:55
+#: Controller/SocialShareController.php:49
+#: Controller/SocialShareController.php:94
+msgid "Access denied."
+msgstr "拒绝访问。"
+
+#: Controller/SocialShareController.php:100
+#, fuzzy
+msgid "Share counts reset successfully."
+msgstr "分享计数已成功重置。"
+
+#: SocialSharePlugin.php:58
 msgid "Social Share"
 msgstr "社交分享"
 
-#: view/settings.phtml:32
+#: view/settings.phtml:34
 msgid "Social Share Settings"
 msgstr "社交分享设置"
 
-#: view/settings.phtml:36
+#: view/settings.phtml:38
 msgid "Save"
 msgstr "保存"
 
-#: view/settings.phtml:51
+#: view/settings.phtml:53
 msgid "General Settings"
 msgstr "常规设置"
 
-#: view/settings.phtml:56
+#: view/settings.phtml:58
 msgid "Enable Social Sharing"
 msgstr "启用分享"
 
-#: view/settings.phtml:66
+#: view/settings.phtml:68
 msgid "Placement"
 msgstr "放置"
 
-#: view/settings.phtml:69
+#: view/settings.phtml:71
 msgid "Before Content"
 msgstr "内容之前"
 
-#: view/settings.phtml:70
+#: view/settings.phtml:72
 msgid "After Content"
 msgstr "内容之后"
 
-#: view/settings.phtml:71
+#: view/settings.phtml:73
 msgid "Before and After Content"
 msgstr "之前和之后的内容"
 
-#: view/settings.phtml:72
+#: view/settings.phtml:74
 msgid "Shortcode Only"
 msgstr "仅限短代码"
 
-#: view/settings.phtml:73
+#: view/settings.phtml:75
 #, fuzzy
 msgid "Template Tag Only"
 msgstr "仅模板标签"
 
-#: view/settings.phtml:74
+#: view/settings.phtml:76
 #, fuzzy
 msgid "Floating Only"
 msgstr "仅浮动"
 
-#: view/settings.phtml:84
+#: view/settings.phtml:86
 #, fuzzy
 msgid "Show Share Buttons On"
 msgstr "显示分享按钮开启"
 
-#: view/settings.phtml:87
+#: view/settings.phtml:89
 #, fuzzy
 msgid "Products Only"
 msgstr "仅限产品"
 
-#: view/settings.phtml:88
+#: view/settings.phtml:90
 msgid "All Content Types"
 msgstr "所有内容类型"
 
-#: view/settings.phtml:89 view/settings.phtml:100
+#: view/settings.phtml:91 view/settings.phtml:102
 #, fuzzy
 msgid "Selected Content Types"
 msgstr "精选内容类型"
 
-#: view/settings.phtml:90
+#: view/settings.phtml:92
 #, fuzzy
 msgid "All Content Types and Products"
 msgstr "所有内容类型和产品"
 
-#: view/settings.phtml:117
+#: view/settings.phtml:119
 #, fuzzy
 msgid "Used only when Selected Content Types is selected."
 msgstr "仅在选择“选择内容类型”时使用。"
 
-#: view/settings.phtml:125
+#: view/settings.phtml:127
 msgid "Social Networks"
 msgstr "社交网络"
 
-#: view/settings.phtml:153
+#: view/settings.phtml:155
 #, fuzzy
 msgid "On Deactivation"
 msgstr "退役后"
 
-#: view/settings.phtml:158
+#: view/settings.phtml:160
 msgid "Remove Settings"
 msgstr "删除设置"
 
-#: view/settings.phtml:171
+#: view/settings.phtml:170
+#, fuzzy
+#| msgid "Remove Settings"
+msgid "Remove Share Data"
+msgstr "移除共享数据"
+
+#: view/settings.phtml:178
+#, fuzzy
+msgid ""
+"Permanently deletes recorded share intents when the plugin is deactivated."
+msgstr "插件停用时，会永久删除录制的共享意图。"
+
+#: view/settings.phtml:186
 #, fuzzy
 msgid "Floating Share Bar"
 msgstr "浮动股份栏"
 
-#: view/settings.phtml:176
+#: view/settings.phtml:191
 msgid "Enable Floating Bar"
 msgstr "启用侧边浮窗"
 
-#: view/settings.phtml:186
+#: view/settings.phtml:201
 msgid "Show On Mobile"
 msgstr "在手机上显示"
 
-#: view/settings.phtml:196
+#: view/settings.phtml:211
 msgid "Floating Position"
 msgstr "浮动位置"
 
-#: view/settings.phtml:199
+#: view/settings.phtml:214
 msgid "Vertical Left"
 msgstr "垂直向左"
 
-#: view/settings.phtml:200
+#: view/settings.phtml:215
 msgid "Vertical Right"
 msgstr "垂直靠右"
 
-#: view/settings.phtml:201
+#: view/settings.phtml:216
 msgid "Horizontal Bottom"
 msgstr "水平底部"
 
-#: view/settings.phtml:202
+#: view/settings.phtml:217
 msgid "Horizontal Top"
 msgstr "水平顶部"
 
-#: view/settings.phtml:215
+#: view/settings.phtml:230
 msgid "Appearance"
 msgstr "外观"
 
-#: view/settings.phtml:220
+#: view/settings.phtml:235
 msgid "Icon Shape"
 msgstr "图标形状"
 
-#: view/settings.phtml:223
+#: view/settings.phtml:238
 msgid "Square"
 msgstr "方形"
 
-#: view/settings.phtml:224
+#: view/settings.phtml:239
 msgid "Round"
 msgstr "圆形"
 
-#: view/settings.phtml:225
+#: view/settings.phtml:240
 msgid "Rectangular"
 msgstr "矩形"
 
-#: view/settings.phtml:235
+#: view/settings.phtml:250
 msgid "Icon Size"
 msgstr "图标大小"
 
-#: view/settings.phtml:247
+#: view/settings.phtml:263
 msgid "Share Counts"
 msgstr "分享计数"
 
-#: view/settings.phtml:252
+#: view/settings.phtml:268
+#, fuzzy
+msgid "Recorded Share Intents"
+msgstr "登记的股份意向"
+
+#: view/settings.phtml:271
+#, fuzzy
+msgid ""
+"Counts represent share-button activations. External networks do not confirm "
+"completed shares."
+msgstr "计数表示分享按钮激活次数。外部网络不会确认已完成的分享。"
+
+#: view/settings.phtml:276
+#, fuzzy
+msgid "Record Share Intents"
+msgstr "创纪录份额意向"
+
+#: view/settings.phtml:286
 #, fuzzy
 msgid "Show Individual Counts"
 msgstr "展览个人计数"
 
-#: view/settings.phtml:262
+#: view/settings.phtml:296
 msgid "Show Total Count"
 msgstr "显示总计数"
 
-#: view/settings.phtml:272
+#: view/settings.phtml:306
 #, fuzzy
 msgid "Cache Counts"
 msgstr "缓存计数"
 
-#: view/settings.phtml:282
+#: view/settings.phtml:316
 #, fuzzy
 msgid "Cache TTL Seconds"
 msgstr "缓存TTL秒"
+
+#: view/settings.phtml:329
+#, fuzzy
+msgid "Reset all recorded share counts? This cannot be undone."
+msgstr "重置所有记录的分享数量？这无法撤销。"
+
+#: view/settings.phtml:331
+#, fuzzy
+#| msgid "Share Counts"
+msgid "Reset Share Counts"
+msgstr "重置份额计数"

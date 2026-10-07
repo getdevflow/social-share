@@ -8,12 +8,13 @@ use App\Application\Devflow;
 use App\Infrastructure\Services\Plugin;
 use App\Shared\Services\Registry;
 use App\Shared\Services\Shortcode\ShortcodeRegistry;
-use App\Shared\Services\SimpleCacheObjectCacheFactory;
 use App\Shared\Services\Utils;
+use Plugin\SocialShare\Controller\ShareIntentController;
 use Plugin\SocialShare\Controller\SocialShareController;
 use Plugin\SocialShare\Shortcode\SocialShareShortcode;
 use Plugin\SocialShare\Support\ShareCountService;
 use Plugin\SocialShare\Support\SocialShareRenderer;
+use Plugin\SocialShare\Support\SocialShareSchema;
 use Plugin\SocialShare\Support\SocialShareSettings;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -30,11 +31,13 @@ use function App\Shared\Helpers\cms_enqueue_css;
 use function App\Shared\Helpers\cms_enqueue_js;
 use function App\Shared\Helpers\delete_option;
 use function App\Shared\Helpers\get_content_by;
+use function App\Shared\Helpers\get_option;
 use function App\Shared\Helpers\get_product_by_id;
 use function App\Shared\Helpers\plugin_basename;
 use function App\Shared\Helpers\plugin_dir_path;
 use function App\Shared\Helpers\plugin_url;
 use function App\Shared\Helpers\site_url;
+use function App\Shared\Helpers\the_permalink;
 use function App\Shared\Helpers\update_option;
 use function dirname;
 use function get_class;
@@ -45,7 +48,7 @@ class SocialSharePlugin extends Plugin
 {
     /**
      * @inheritDoc
-     * @return array
+     * @return array<string, mixed>
      * @throws Exception
      * @throws ReflectionException
      */
@@ -56,8 +59,8 @@ class SocialSharePlugin extends Plugin
             'id' => 'social-share',
             'slug' => 'SocialShare',
             'author' => 'Joshua Parker',
-            'version' => '1.0.0',
-            'description' => 'A simple social share plugin that allows your visitors to share and bookmark your content.',
+            'version' => '2.0.0',
+            'description' => 'Social sharing buttons with secure, local share-intent counts.',
             'basename' => plugin_basename(dirname(__FILE__)),
             'path' => plugin_dir_path(dirname(__FILE__)),
             'url' => plugin_url('', __CLASS__),
@@ -83,6 +86,7 @@ class SocialSharePlugin extends Plugin
      */
     public function handle(): void
     {
+        $this->ensureSchema();
         $this->registerAdminAssets();
         $this->registerFrontendAssets();
         $this->registerShortcode();
@@ -90,13 +94,14 @@ class SocialSharePlugin extends Plugin
         $this->registerAdminMenu();
         Action::getInstance()->addAction(hook: 'plugins_loaded', callback: [$this, 'render'], priority: 1);
         Action::getInstance()->addAction(hook: 'flush_cache', callback: function () {
-            SimpleCacheObjectCacheFactory::make('socialshare')->clear();
+            Devflow::$PHP->make(ShareCountService::class)->clearCache();
         }, priority: 1);
     }
 
     /**
      * @return void
      * @throws ReflectionException
+     * @throws TypeException
      */
     private function registerAdminAssets(): void
     {
@@ -122,10 +127,16 @@ class SocialSharePlugin extends Plugin
 
     /**
      * @return void
+     * @throws Exception
+     * @throws InvalidArgumentException
      * @throws ReflectionException
      */
     private function registerFrontendAssets(): void
     {
+        if (!new SocialShareSettings()->enabled()) {
+            return;
+        }
+
         Action::getInstance()->addAction('cms_head', function (): void {
             cms_enqueue_css(
                 config: 'plugin',
@@ -157,13 +168,9 @@ class SocialSharePlugin extends Plugin
     private function registerShortcode(): void
     {
         $registry = new ShortcodeRegistry();
-        $settings = new SocialShareSettings();
-        $renderer = new SocialShareRenderer(
-            settings: $settings,
-            counter: new ShareCountService($settings)
-        );
-
-        $registry->register(new SocialShareShortcode($renderer));
+        $registry->register(new SocialShareShortcode(
+            Devflow::$PHP->make(SocialShareRenderer::class)
+        ));
     }
 
     /**
@@ -175,7 +182,14 @@ class SocialSharePlugin extends Plugin
         Filter::getInstance()->addFilter('the.body', function (string $content, string $id): string {
             $settings = new SocialShareSettings();
 
-            $context = get_content_by('id', $id)->toArray();
+            $record = get_content_by('id', $id);
+
+            if ($record === false || !method_exists($record, 'toArray')) {
+                return $content;
+            }
+
+            $context = $record->toArray();
+            $context['entity_type'] = 'content';
 
             if (!$settings->enabled() || !$settings->shouldDisplayFor($context)) {
                 return $content;
@@ -187,16 +201,13 @@ class SocialSharePlugin extends Plugin
                 return $content;
             }
 
-            $renderer = new SocialShareRenderer(
-                settings: $settings,
-                counter: new ShareCountService($settings)
-            );
+            $renderer = Devflow::$PHP->make(SocialShareRenderer::class);
 
             $buttons = $renderer->render(
                 $this->shareArgsFromContext($context, 'standard')
             );
 
-            $floating = $settings->all()['floating_enabled']
+            $floating = ($settings->all()['floating_enabled'] || $placement === 'floating')
                 ? $renderer->render($this->shareArgsFromContext($context, 'floating'))
                 : '';
 
@@ -223,7 +234,14 @@ class SocialSharePlugin extends Plugin
         Filter::getInstance()->addFilter(
             'get.product.body',
             function (string $content, string $id): string {
-                $context = get_product_by_id($id)->toArray();
+                $record = get_product_by_id($id);
+
+                if ($record === false || !method_exists($record, 'toArray')) {
+                    return $content;
+                }
+
+                $context = $record->toArray();
+                $context['entity_type'] = 'product';
 
                 $settings = new SocialShareSettings();
 
@@ -231,22 +249,19 @@ class SocialSharePlugin extends Plugin
                     return $content;
                 }
 
-                    $placement = $settings->placement();
+                $placement = $settings->placement();
 
                 if ($placement === 'shortcode' || $placement === 'template_tag') {
                     return $content;
                 }
 
-                    $renderer = new SocialShareRenderer(
-                        settings: $settings,
-                        counter: new ShareCountService($settings)
-                    );
+                $renderer = Devflow::$PHP->make(SocialShareRenderer::class);
 
                 $buttons = $renderer->render(
                     $this->shareArgsFromContext($context, 'standard')
                 );
 
-                $floating = $settings->all()['floating_enabled']
+                $floating = ($settings->all()['floating_enabled'] || $placement === 'floating')
                     ? $renderer->render($this->shareArgsFromContext($context, 'floating'))
                     : '';
 
@@ -294,33 +309,44 @@ class SocialSharePlugin extends Plugin
     }
 
     /**
-     * @param array $context
+     * @param array<string, mixed> $context
      * @param string $placement
      * @return string[]
+     * @throws ContainerExceptionInterface
      * @throws Exception
+     * @throws InvalidArgumentException
+     * @throws NotFoundExceptionInterface
+     * @throws ReflectionException
      */
     private function shareArgsFromContext(array $context, string $placement): array
     {
         $args = ['placement' => $placement];
 
-        $url = $context['relativeUrl']
-            ?? $context['permalink']
-            ?? $context['canonical_url']
-            ?? $context['link']
-            ?? $_SERVER['REQUEST_URI']
-            ?? '';
+        $url = $context['canonical_url']
+        ?? $context['entity_type'] === 'content' ? the_permalink($context['id']) : null
+        ?? $context['relativeUrl']
+        ?? $context['link']
+        ?? $_SERVER['REQUEST_URI']
+        ?? '';
 
-        if ($url !== '' && !str_starts_with($url, 'http')) {
+        if ($url !== '' && !preg_match('#^https?://#i', (string) $url)) {
             $url = site_url($url);
         }
 
         $title = $context['title']
-            ?? $context['content_title']
-            ?? $context['product_title']
-            ?? '';
+        ?? $context['content_title']
+        ?? $context['product_title']
+        ?? '';
 
         $args['url'] = trim((string) $url);
         $args['title'] = trim((string) $title);
+
+        $id = trim((string) ($context['id'] ?? ''));
+        $entityType = ($context['entity_type'] ?? '') === 'product' ? 'product' : 'content';
+
+        if ($id !== '') {
+            $args['content_key'] = $entityType . ':' . $id;
+        }
 
         return $args;
     }
@@ -328,20 +354,20 @@ class SocialSharePlugin extends Plugin
     private function wrapVerticalFloating(string $position, string $floating, string $content): string
     {
         $class = $position === 'vertical_right'
-            ? 'df-social-share-wrap df-social-share-wrap--right'
-            : 'df-social-share-wrap df-social-share-wrap--left';
+        ? 'df-social-share-wrap df-social-share-wrap--right'
+        : 'df-social-share-wrap df-social-share-wrap--left';
 
         if ($position === 'vertical_right') {
             return '<div class="' . $class . '">'
-                . '<div class="df-social-share-content">' . $content . '</div>'
-                . $floating
-                . '</div>';
+            . '<div class="df-social-share-content">' . $content . '</div>'
+            . $floating
+            . '</div>';
         }
 
         return '<div class="' . $class . '">'
-            . $floating
-            . '<div class="df-social-share-content">' . $content . '</div>'
-            . '</div>';
+        . $floating
+        . '<div class="df-social-share-content">' . $content . '</div>'
+        . '</div>';
     }
 
     /**
@@ -353,7 +379,12 @@ class SocialSharePlugin extends Plugin
      */
     public function onActivation(): void
     {
-        update_option(SocialShareSettings::OPTION_KEY, new SocialShareSettings()->defaults());
+        Devflow::$PHP->make(SocialShareSchema::class)->migrateUp();
+        update_option('social_share_schema_version', SocialShareSchema::VERSION);
+
+        if (!is_array(get_option(SocialShareSettings::OPTION_KEY, null))) {
+            update_option(SocialShareSettings::OPTION_KEY, new SocialShareSettings()->defaults());
+        }
     }
 
     /**
@@ -367,11 +398,17 @@ class SocialSharePlugin extends Plugin
     {
         $settings = new SocialShareSettings();
 
-        if ((bool) $settings->all()['remove_settings'] === false) {
-            return;
+        $values = $settings->all();
+
+        if ((bool) $values['remove_data']) {
+            Devflow::$PHP->make(SocialShareSchema::class)->migrateDown();
+            Devflow::$PHP->make(ShareCountService::class)->clearCache();
+            delete_option('social_share_schema_version');
         }
 
-        delete_option(key: $settings::OPTION_KEY);
+        if ((bool) $values['remove_settings']) {
+            delete_option(key: $settings::OPTION_KEY);
+        }
     }
 
     /**
@@ -382,10 +419,43 @@ class SocialSharePlugin extends Plugin
     {
         $router = Devflow::$PHP->router;
 
-        $router->map(
-            verbs: ['GET', 'POST'],
-            uri: '/admin/plugin/social-share/',
-            callback: fn(ServerRequest $request, SocialShareController $controller) => $controller->settings($request)
+        $router->group([
+            'prefix' => 'admin/plugin/social-share',
+            'middleware' => ['gate:manage:plugins, /admin/'],
+        ], function ($route): void {
+            $route->get(
+                '/',
+                fn(ServerRequest $request, SocialShareController $controller) => $controller->settings($request)
+            );
+            $route->post(
+                '/',
+                fn(ServerRequest $request, SocialShareController $controller) => $controller->settings($request)
+            );
+            $route->post(
+                '/reset-counts/',
+                fn(ServerRequest $request, SocialShareController $controller) => $controller->resetCounts($request)
+            );
+        });
+
+        $router->post(
+            '/social-share/record/',
+            fn(ServerRequest $request, ShareIntentController $controller) => $controller->record($request)
         );
+    }
+
+    /**
+     * @throws Exception
+     * @throws InvalidArgumentException
+     * @throws ReflectionException
+     * @throws TypeException
+     */
+    private function ensureSchema(): void
+    {
+        if (get_option('social_share_schema_version', '') === SocialShareSchema::VERSION) {
+            return;
+        }
+
+        Devflow::$PHP->make(SocialShareSchema::class)->migrateUp();
+        update_option('social_share_schema_version', SocialShareSchema::VERSION);
     }
 }

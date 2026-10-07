@@ -21,9 +21,11 @@ $r = Registry::getInstance()->get('social-share');
 $settings = $params['settings'];
 $networks = $params['networks'];
 $contentTypes = $params['contentTypes'] ?? [];
+$shareTotal = (int) ($params['shareTotal'] ?? 0);
 ?>
 
     <form name="form" method="post" data-toggle="validator" action="<?= admin_url('plugin/social-share/'); ?>" id="form" autocomplete="off">
+        <?= csrf_field(); ?>
 
         <div class="content-wrapper">
             <div class="box box-solid">
@@ -163,6 +165,19 @@ $contentTypes = $params['contentTypes'] ?? [];
                                                value="1"<?= checked('1', !empty($settings['remove_settings']) ? '1' : '0', false); ?> />
                                     </div>
                                 </div>
+
+                                <div class="form-group">
+                                    <label><strong><?= esc_html__('Remove Share Data', $r['id']); ?></strong></label>
+                                    <div class="ios-switch switch-md pull-right">
+                                        <input type="checkbox"
+                                               class="js-switch"
+                                               name="social_share[remove_data]"
+                                               value="1"<?= checked('1', !empty($settings['remove_data']) ? '1' : '0', false); ?> />
+                                    </div>
+                                    <p class="help-block">
+                                        <?= esc_html__('Permanently deletes recorded share intents when the plugin is deactivated.', $r['id']); ?>
+                                    </p>
+                                </div>
                             </div>
                         </div>
 
@@ -235,6 +250,7 @@ $contentTypes = $params['contentTypes'] ?? [];
                                     <label><strong><?= esc_html__('Icon Size', $r['id']); ?></strong></label>
                                     <input type="number"
                                            min="16"
+                                           max="96"
                                            name="social_share[icon_size]"
                                            class="form-control"
                                            value="<?= esc_attr((string) $settings['icon_size']); ?>">
@@ -248,6 +264,24 @@ $contentTypes = $params['contentTypes'] ?? [];
                             </div>
 
                             <div class="box-body">
+                                <div class="form-group">
+                                    <label><strong><?= esc_html__('Recorded Share Intents', $r['id']); ?></strong></label>
+                                    <p class="form-control-static"><?= esc_html((string) $shareTotal); ?></p>
+                                    <p class="help-block">
+                                        <?= esc_html__('Counts represent share-button activations. External networks do not confirm completed shares.', $r['id']); ?>
+                                    </p>
+                                </div>
+
+                                <div class="form-group">
+                                    <label><strong><?= esc_html__('Record Share Intents', $r['id']); ?></strong></label>
+                                    <div class="ios-switch switch-md pull-right">
+                                        <input type="checkbox"
+                                               class="js-switch"
+                                               name="social_share[track_shares]"
+                                               value="1"<?= checked('1', !empty($settings['track_shares']) ? '1' : '0', false); ?> />
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
                                     <label><strong><?= esc_html__('Show Individual Counts', $r['id']); ?></strong></label>
                                     <div class="ios-switch switch-md pull-right">
@@ -282,10 +316,20 @@ $contentTypes = $params['contentTypes'] ?? [];
                                     <label><strong><?= esc_html__('Cache TTL Seconds', $r['id']); ?></strong></label>
                                     <input type="number"
                                            min="300"
+                                           max="604800"
                                            name="social_share[cache_ttl]"
                                            class="form-control"
                                            value="<?= esc_attr((string) $settings['cache_ttl']); ?>">
                                 </div>
+
+                                <button
+                                        type="submit"
+                                        class="btn btn-danger btn-sm js-social-share-reset"
+                                        formaction="<?= admin_url('plugin/social-share/reset-counts/'); ?>"
+                                        data-confirm="<?= esc_attr(esc_html__('Reset all recorded share counts? This cannot be undone.', $r['id'])); ?>"
+                                >
+                                    <?= esc_html__('Reset Share Counts', $r['id']); ?>
+                                </button>
                             </div>
                         </div>
 
@@ -312,6 +356,9 @@ $contentTypes = $params['contentTypes'] ?? [];
                 '#social-share-display-scope',
                 toggleSelectedContentTypes
             );
+            $('.js-social-share-reset').on('click', function () {
+                return window.confirm(String($(this).attr('data-confirm') || ''));
+            });
 
             toggleSelectedContentTypes();
         });
